@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +24,7 @@ Route::get('/blogs', [BlogController::class, 'getBlogs']);
 Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments']);
 
 Route::post('/blog/{blog}/comment', [CommentController::class, 'addCommentToBlog']);
+
+Route::put('/update-comment/{comment}', [CommentController::Class, 'updateComment']);
+
+Route::delete('/delete-comment/{comment}', [CommentController::Class, 'deleteComment']);
