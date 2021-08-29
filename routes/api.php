@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +21,5 @@ use App\Http\Controllers\BlogController;
 Route::get('/blogs', [BlogController::class, 'getBlogs']);
 
 Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments']);
+
+Route::post('/blog/{blog}/comment', [CommentController::class, 'addCommentToBlog']);
