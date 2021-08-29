@@ -15,5 +15,19 @@ class BlogController extends Controller
     public function getBlogs()
     {
         return Blog::all()->toJson();
-    }    
+    }
+
+    public function getBlogWithComments($blog)
+    {
+        $blog = Blog::where('id', $blog)->with('comments')->first();
+
+        if ($blog)
+        {
+            return $blog->toJson();
+        }
+        else
+        {
+            return json_encode('Failed');
+        }
+    }
 }

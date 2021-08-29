@@ -17,3 +17,5 @@ use App\Http\Controllers\BlogController;
 */
 
 Route::get('/blogs', [BlogController::class, 'getBlogs']);
+
+Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments']);
