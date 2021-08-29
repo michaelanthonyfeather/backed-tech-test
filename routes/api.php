@@ -23,3 +23,5 @@ Route::get('/blogs', [BlogController::class, 'getBlogs']);
 Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments']);
 
 Route::post('/blog/{blog}/comment', [CommentController::class, 'addCommentToBlog']);
+
+Route::put('/comment/{comment}', [CommentController::Class, 'updateComment']);
