@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Comment;
 
-
-class BlogController extends Controller
+class CommentController extends Controller
 {
     public function addCommentToBlog(Blog $blog)
     {
@@ -31,29 +30,6 @@ class BlogController extends Controller
 
         $comment = new Comment;
         $comment->fill($request->all());
-
-        return json_encode('Success');
-    }
-
-    public function updateComment(Request $request, Comment $comment)
-    {
-        if (!$comment)
-        {
-            return json_encode('Failed');
-        }
-
-        $this->validate(request(), [
-            'email' => 'required|string|email',
-            'comment' => 'required|string',
-        ]);
-
-        $comment->update([
-            'title' => $request->title ? $request->title : $comment->title,
-            'name' => $request->name ? $request->name : $comment->name,
-            'email' => $request->email ? $request->email : $comment->email,
-            'comment' => $request->comment ? $request->comment : $comment->comment,
-            'blog_id' => $request->blog_id ? $request->blog_id : $comment->blog_id,
-        ]);
 
         return json_encode('Success');
     }
