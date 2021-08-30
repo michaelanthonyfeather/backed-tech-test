@@ -12,22 +12,22 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
+    //Function to get all BLogs
     public function getBlogs()
     {
-        return Blog::all()->toJson();
+        return response()->json([
+            'message' => 'Received all Blogs',
+            'data' => Blog::all(),
+        ], 200);
     }
 
-    public function getBlogWithComments($blog)
+    //Function to get a single Blog with it's Comments
+    public function getBlogWithComments(Blog $blog)
     {
-        $blog = Blog::where('id', $blog)->with('comments')->first();
+        return response()->json([
+            'message' => 'Received blog with an ID of ' . $blog->id . ' and all of its comments',
+            'data' => ['blog' => $blog, 'comments' => $blog->comments],
+        ], 200);
 
-        if ($blog)
-        {
-            return $blog->toJson();
-        }
-        else
-        {
-            return json_encode('Failed');
-        }
     }
 }

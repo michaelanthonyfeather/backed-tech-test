@@ -13,63 +13,59 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+    //Function to a dd a comment to a single blog
     public function addCommentToBlog(Request $request, Blog $blog)
     {
-        if (!$blog)
-        {
-            return json_encode('Failed');
-        }
-
         $this->validate(request(), [
             'title' => 'required|string',
             'name' => 'required|string',
             'email' => 'required|string|email',
             'comment' => 'required|string',
-            'blog_id' => 'required|integer',
         ]);
 
         $comment = new Comment;
         $comment->fill($request->all());
+        $comment->blog_id = $blog->id;
+
         $comment->save();
 
-        return json_encode('Success');
+        return response()->json([
+            'message' => 'Comment added the the blog with an ID of ' . $blog->id,
+            'data' => Blog::all(),
+        ], 200);
     }
 
+    //Function to update a single comment
     public function updateComment(Request $request, Comment $comment)
     {
-        if (!$comment)
-        {
-            return json_encode('Failed');
-        }
-
         $this->validate(request(), [
             'title' => 'string',
             'name' => 'string',
             'email' => 'string|email',
-            'comment' => 'string',
+            'comment_data' => 'string',
         ]);
 
         $comment->update([
             'title' => $request->title ? $request->title : $comment->title,
             'name' => $request->name ? $request->name : $comment->name,
             'email' => $request->email ? $request->email : $comment->email,
-            'comment' => $request->comment ? $request->comment : $comment->comment,
+            'comment' => $request->comment_data ? $request->comment_data : $comment->comment,
         ]);
 
-        return json_encode('Success');
+        return response()->json([
+            'message' => 'Comment updated with an ID of ' . $comment->id,
+            'data' => $comment,
+        ], 200);
     }
 
+    //Function to delete a comment
     public function deleteComment(Request $request, Comment $comment)
     {
-        if ($comment)
-        {
-            $comment->delete();
+        $comment->delete();
 
-            return json_encode('Success');
-        }
-        else
-        {
-            return json_encode('Failed');
-        }
+        return response()->json([
+            'message' => 'Comment deleted with an ID of ' . $comment->id,
+        ], 200);
+
     }
 }

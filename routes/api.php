@@ -21,10 +21,30 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/blogs', [BlogController::class, 'getBlogs']);
 
-Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments']);
+Route::get('/blog/{blog}', [BlogController::class, 'getBlogWithComments'])
+        ->missing(function (Request $request) {
+            return response()->json([
+                'message' => 'No blog was found with an ID of ' . $request->blog,
+            ], 404);
+        });
 
-Route::post('/blog/{blog}/comment', [CommentController::class, 'addCommentToBlog']);
+Route::post('/blog/{blog}/comment', [CommentController::class, 'addCommentToBlog'])
+        ->missing(function (Request $request) {
+            return response()->json([
+                'message' => 'No blog was found with an ID of ' . $request->blog,
+            ], 404);
+        });
 
-Route::put('/update-comment/{comment}', [CommentController::Class, 'updateComment']);
+Route::put('/update-comment/{comment}', [CommentController::Class, 'updateComment'])
+        ->missing(function (Request $request) {
+            return response()->json([
+                'message' => 'No comment was found with an ID of ' . $request->comment,
+            ], 404);
+        });
 
-Route::delete('/delete-comment/{comment}', [CommentController::Class, 'deleteComment']);
+Route::delete('/delete-comment/{comment}', [CommentController::Class, 'deleteComment'])
+        ->missing(function (Request $request) {
+            return response()->json([
+                'message' => 'No comment was found with an ID of ' . $request->comment,
+            ], 404);
+        });
